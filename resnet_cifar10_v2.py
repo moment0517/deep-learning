@@ -25,7 +25,6 @@ def residual_module(x, out_channels, strides=[1, 1], name=None):
         residual_module_out = tf.keras.layers.add([shortcut, conv1x1_3])
         
         return residual_module_out
-        return residual_module_out
 
 
 def shuffle_batch(X, y, batch_size):
@@ -77,9 +76,9 @@ with tf.name_scope("conv4_x"):
         out = residual_module(out, 256, name="conv4_{}".format(i))
     # out = residual_module(out, 256, strides=[2, 2], name="conv4_9")
     print(out.get_shape())
-
-out = tf.keras.layers.Activation('relu')(out)
+  
 out = tf.keras.layers.BatchNormalization(epsilon=bnEps, momentum=bnMom)(out)
+out = tf.keras.layers.Activation('relu')(out)
 avg_pool = tf.keras.layers.AveragePooling2D(pool_size=[8, 8])(out)
 flatten = tf.keras.layers.Flatten()(avg_pool)
 # dropout = tf.keras.layers.Dropout(0.5)(flatten)
